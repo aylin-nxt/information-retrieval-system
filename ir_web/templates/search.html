@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 100%;
+      height: 100vh;
+      padding: 40px;
+      background-color: #F5F4F5;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .form-container {
+      width: 500px;
+      height:200px;
+      background-color: #E0DFE1;
+      padding: 30px;
+      display: flex;
+      flex-direction: row;
+      align-item: center;
+      justify-content: center;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px #BBB4BB;
+    }
+
+    .form {
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .input-search {
+      width: 100%;
+      height: 25px;
+      padding: 15px;
+      font-size: 16px;
+      outline: none;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .input-search:focus {
+      border-color: #BBB4BB;
+      box-shadow: 0 0 5px #BBB4BB;
+      outline: none;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .submit-button {
+      color: white;
+      background-color: #2D93AD;
+      border: none;
+      border-radius: 6px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    .submit-button:hover {
+      background-color: #2A8AA2;
+    }
+
+    .result-container {
+  margin: 20px;
+  width: 100% ;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 10px #BBB4BB;
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.result-item {
+  background-color: #F9F9F9;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #E0E0E0;
+  white-space: pre-wrap; /* preserve line breaks */
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!--  input search  -->
+    <div class="form-container">
+      <form class="form" method="GET" action="{% url 'search' %}">
+        <label>
+          search:
+          <input class="input-search" type="text" name="search_query" value="{{ search_query }}">
+        </label>
+
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="query_type" value="boolean" {% if selected_filter == 'boolean' %}checked{% endif %}>
+            boolean
+          </label>
+          <label>
+            <input type="radio" name="query_type" value="phrase" {% if selected_filter == 'phrase' %}checked{% endif %}>
+            phrase
+          </label>
+          <label>
+            <input type="radio" name="query_type" value="proximity" {% if selected_filter == 'proximity' %}checked{% endif %}>
+            proximity
+          </label>
+          <label>
+            <input type="radio" name="query_type" value="wildcard" {% if selected_filter == 'wildcard' %}checked{% endif %}>
+            wildcard
+          </label>
+          <label>
+            <input type="radio" name="query_type" value="ranking" {% if selected_filter == 'ranking' %}checked{% endif %}>
+            ranking
+          </label>
+        </div>
+
+        <button class="submit-button" type="submit">submit</button>
+      </form>
+    </div>
+    <!--  result  -->
+    <div class="result-container">
+      {% if results %}
+        <div class="results-list">
+          {% for text in results %}
+            <div class="result-item">
+              <p>{{ text }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        {% if search_query %}
+          <p>No results found for "{{ search_query }}".</p>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

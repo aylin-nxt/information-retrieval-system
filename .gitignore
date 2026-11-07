@@ -1,0 +1,36 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+myenv/
+.venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+media/
+
+# Generated IR index files
+inverted_index*.json
+inverted_inde*.json
+positional_index.json
+processed_query.json
+tokens_set.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.*
+!.env.example
