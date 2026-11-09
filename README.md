@@ -41,40 +41,58 @@ It provides several retrieval methods and indexing structures to explore how dif
 
 ```text
 information-retrieval-system/
-|
-+-- ir_project/
-|   +-- settings.py
-|   +-- urls.py
-|   +-- ...
-|
-+-- ir_system/
-|   +-- data_structures/
-|   +-- document_preprocessing/
-|   +-- processing_classes/
-|   +-- query_preprocessing/
-|   +-- utils/
-|   +-- docs/
-|   +-- ir_system.py
-|
-+-- ir_web/
-|   +-- templates/
-|   |   +-- search.html
-|   +-- views.py
-|   +-- ...
-|
-+-- manage.py
-+-- requirements.txt
-+-- .gitignore
-+-- README.md
+│
+├── ir_project/                     # Django project configuration
+│   ├── settings.py
+│   ├── urls.py
+│   └── ...
+│
+├── ir_system/                      # Core Information Retrieval implementation
+│   ├── data_structures/             # Indexing data structures
+│   │   ├── Trie.py
+│   │   ├── inverted_index.py
+│   │   └── positional_index.py
+│   │
+│   ├── document_preprocessing/      # Document preprocessing
+│   │   └── document_preprocessing.py
+│   │
+│   ├── processing_classes/          # Retrieval algorithms
+│   │   ├── boolean.py
+│   │   ├── permuterm.py
+│   │   ├── phrase.py
+│   │   ├── proximity.py
+│   │   └── ranking.py
+│   │
+│   ├── query_preprocessing/         # Query processing
+│   │   ├── boolean_query_preprocessing.py
+│   │   ├── proximity_query_preprocessing.py
+│   │   ├── query_preprocessing.py
+│   │   └── spell_correction.py
+│   │
+│   ├── utils/
+│   ├── docs/                        # Document collection
+│   └── ir_system.py                # Core system integration
+│
+├── ir_web/                          # Django web interface
+│   ├── templates/
+│   │   └── search.html
+│   ├── views.py
+│   └── ...
+│
+├── manage.py
+├── requirements.txt
+├── .gitignore
+└── README.md
 ```
 
 ## Installation and Setup
+
+Follow these steps to run the project locally.
 
 ### 1. Clone the repository
 
 ```bash
 git clone https://github.com/aylin-nxt/information-retrieval-system.git
-
 cd information-retrieval-system
 ```
 
@@ -84,13 +102,15 @@ cd information-retrieval-system
 python -m venv venv
 ```
 
-Activate it on Windows:
+Activate the environment:
+
+**Windows (PowerShell)**
 
 ```powershell
 .\venv\Scripts\Activate.ps1
 ```
 
-On Linux or macOS:
+**Linux / macOS**
 
 ```bash
 source venv/bin/activate
@@ -109,39 +129,38 @@ pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 ```
 
-### 5. Configure the Django secret key
+### 5. Set the Django secret key
 
-Set the environment variable before running the application.
+The application reads its secret key from the `DJANGO_SECRET_KEY` environment variable.
 
-On Windows PowerShell:
+**Windows (PowerShell)**
 
 ```powershell
-$env:DJANGO_SECRET_KEY = (python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())")
+$secret = python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+$env:DJANGO_SECRET_KEY = $secret
 ```
 
-On Linux or macOS:
+**Linux / macOS**
 
 ```bash
-export DJANGO_SECRET_KEY=$(python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())")Get-Content README.md | Select-String -Pattern 'DJANGO_SECRET_KEY|ir_project/|ir_system/|ir_web/'
+export DJANGO_SECRET_KEY=$(python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())")
 ```
 
-### 6. Apply migrations
+### 6. Apply database migrations
 
 ```bash
 python manage.py migrate
 ```
 
-### 7. Run the development server
+### 7. Start the development server
 
 ```bash
 python manage.py runserver
 ```
 
-Open the application at:
+Open the application in your browser:
 
-```text
 http://127.0.0.1:8000/
-```
 
 ## Dataset
 
